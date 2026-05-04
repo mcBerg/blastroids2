@@ -200,6 +200,13 @@ function _init()
     player.grid_y = 1
     player.x = 64
     player.y = 64
+    player.dx = 0
+    player.dy = 0
+    player.angle = 0
+
+    -- reset effects
+    shake = 0
+    respawn_timer = 0
 
     -- clear all game objects
     asteroids = {}
@@ -229,6 +236,13 @@ function _update()
     -- handle respawn timer
     if respawn_timer > 0 then
         respawn_timer -= 1
+
+        -- limit shake to first 30 frames (~1 second) during respawn only
+        -- respawn_timer starts at 60, so when it hits 30 we've shaken for 30 frames
+        if respawn_timer == 30 and not game_over then
+            shake = 0
+        end
+
         if respawn_timer == 0 then
             -- check if spawn location is safe
             if check_spawn_safe() then
@@ -244,10 +258,10 @@ function _update()
                 respawn_timer = 30
             end
         end
-        return
     end
 
-    -- handle input
+    -- handle input (skip if respawning)
+    if respawn_timer == 0 then
     if btn(0) then -- left
         player.angle += player.turn_speed
     end
@@ -322,6 +336,7 @@ function _update()
             player.grid_y = 0 -- wrap within column
         end
     end
+    end -- end of respawn_timer == 0 check
 
     -- update asteroids
     for a in all(asteroids) do
@@ -351,7 +366,7 @@ function _update()
         if respawn_timer == 0 and a.grid_x == player.grid_x and a.grid_y == player.grid_y and check_collision(player.x, player.y, 4, a.x, a.y, a.size * 4) then
             lives -= 1
             spawn_particles(player.x, player.y, 20, 8)
-            shake = 8
+            shake = 16
             sfx(2) -- death sound
             if lives <= 0 then
                 game_over = true
