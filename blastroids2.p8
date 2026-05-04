@@ -362,7 +362,7 @@ function _update()
         if respawn_timer == 0 and a.grid_x == player.grid_x and a.grid_y == player.grid_y and check_collision(player.x, player.y, 4, a.x, a.y, a.size * 4) then
             lives -= 1
             spawn_particles(player.x, player.y, 20, 8)
-            shake = 8
+            shake = 16
             sfx(2) -- death sound
             if lives <= 0 then
                 game_over = true
