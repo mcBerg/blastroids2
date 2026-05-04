@@ -200,6 +200,9 @@ function _init()
     player.grid_y = 1
     player.x = 64
     player.y = 64
+    player.dx = 0
+    player.dy = 0
+    player.angle = 0
 
     -- clear all game objects
     asteroids = {}
@@ -230,9 +233,9 @@ function _update()
     if respawn_timer > 0 then
         respawn_timer -= 1
 
-        -- limit shake to first 15 frames (~0.5 seconds)
-        -- respawn_timer starts at 60, so when it hits 45 we've shaken for 15 frames
-        if respawn_timer == 45 then
+        -- limit shake to first 30 frames (~1 second) during respawn only
+        -- respawn_timer starts at 60, so when it hits 30 we've shaken for 30 frames
+        if respawn_timer == 30 and not game_over then
             shake = 0
         end
 
