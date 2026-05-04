@@ -229,6 +229,12 @@ function _update()
     -- handle respawn timer
     if respawn_timer > 0 then
         respawn_timer -= 1
+
+        -- limit shake to first 15 frames (~0.5 seconds)
+        if respawn_timer < 45 then
+            shake = 0
+        end
+
         if respawn_timer == 0 then
             -- check if spawn location is safe
             if check_spawn_safe() then
@@ -244,10 +250,10 @@ function _update()
                 respawn_timer = 30
             end
         end
-        return
     end
 
-    -- handle input
+    -- handle input (skip if respawning)
+    if respawn_timer == 0 then
     if btn(0) then -- left
         player.angle += player.turn_speed
     end
@@ -322,6 +328,7 @@ function _update()
             player.grid_y = 0 -- wrap within column
         end
     end
+    end -- end of respawn_timer == 0 check
 
     -- update asteroids
     for a in all(asteroids) do
