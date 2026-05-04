@@ -1,4 +1,4 @@
-Plan for Blastroids 2 Expansion
+Plan for Blastroids 2 Expansionc
 Feature 1: 3x3 Screen Grid System
 Current state: The game uses simple screen wrapping (0-127 pixels) where crossing any edge loops to the opposite side.
 Implementation approach:
