@@ -231,7 +231,8 @@ function _update()
         respawn_timer -= 1
 
         -- limit shake to first 15 frames (~0.5 seconds)
-        if respawn_timer < 45 then
+        -- respawn_timer starts at 60, so when it hits 45 we've shaken for 15 frames
+        if respawn_timer == 45 then
             shake = 0
         end
 
