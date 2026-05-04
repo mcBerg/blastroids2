@@ -204,6 +204,10 @@ function _init()
     player.dy = 0
     player.angle = 0
 
+    -- reset effects
+    shake = 0
+    respawn_timer = 0
+
     -- clear all game objects
     asteroids = {}
     bullets = {}
