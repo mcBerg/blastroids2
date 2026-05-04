@@ -232,10 +232,10 @@ function _update()
 
     -- handle input
     if btn(0) then -- left
-        player.angle -= player.turn_speed
+        player.angle += player.turn_speed
     end
     if btn(1) then -- right
-        player.angle += player.turn_speed
+        player.angle -= player.turn_speed
     end
     if btn(2) then -- up (thrust)
         player.dx += cos(player.angle) * player.thrust
