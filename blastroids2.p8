@@ -459,10 +459,11 @@ function draw_asteroid(a)
     local r = a.size * 4
     local pts = 8
     for i = 0, pts - 1 do
+        local j = (i + 1) % pts
         local a1 = a.rot + i / pts
-        local a2 = a.rot + (i + 1) / pts
+        local a2 = a.rot + j / pts
         local r1 = r + cos(i * 0.7) * r * 0.3
-        local r2 = r + cos((i + 1) * 0.7) * r * 0.3
+        local r2 = r + cos(j * 0.7) * r * 0.3
         local x1 = a.x + cos(a1) * r1
         local y1 = a.y + sin(a1) * r1
         local x2 = a.x + cos(a2) * r2
