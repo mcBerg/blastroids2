@@ -170,6 +170,17 @@ function find_nearest_asteroid(x, y, gx, gy, exclude)
     return nearest
 end
 
+function check_spawn_safe()
+    for a in all(asteroids) do
+        if a.grid_x == 1 and a.grid_y == 1 then
+            if check_collision(64, 64, 10, a.x, a.y, a.size * 4) then
+                return false
+            end
+        end
+    end
+    return true
+end
+
 function spawn_particles(x, y, count, col)
     for i = 1, count do
         add(particles, {
@@ -219,13 +230,19 @@ function _update()
     if respawn_timer > 0 then
         respawn_timer -= 1
         if respawn_timer == 0 then
-            player.x = 64
-            player.y = 64
-            player.grid_x = 1
-            player.grid_y = 1
-            player.dx = 0
-            player.dy = 0
-            player.angle = 0
+            -- check if spawn location is safe
+            if check_spawn_safe() then
+                player.x = 64
+                player.y = 64
+                player.grid_x = 1
+                player.grid_y = 1
+                player.dx = 0
+                player.dy = 0
+                player.angle = 0
+            else
+                -- delay respawn if not safe
+                respawn_timer = 30
+            end
         end
         return
     end
